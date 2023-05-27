@@ -1,3 +1,4 @@
+import { ApiCall } from "./apiCall/ApiCall";
 import { Minimum } from "./minimum/Minimum";
 
 export const App = () => {
@@ -5,7 +6,10 @@ export const App = () => {
     <div>
       <h1>React無限スクロール</h1>
 
-      <Minimum />
+      <div style={{ display: "flex", gap: 30 }}>
+        <Minimum />
+        <ApiCall />
+      </div>
     </div>
   );
 };
