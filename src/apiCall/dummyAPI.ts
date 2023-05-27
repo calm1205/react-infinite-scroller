@@ -1,5 +1,5 @@
 export type dummyApiCursor = 0 | 1 | 2 | 3;
-type Person = { name: string; age: number; job: string };
+export type Person = { name: string; age: number; job: string };
 export type DummyResponse = {
   data: Person[];
   page: number;
