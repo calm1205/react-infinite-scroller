@@ -3,6 +3,7 @@ import { dummyQuery } from "./dummyApi/dummyAPI";
 import { useCallback, useEffect, useRef } from "react";
 import { Wrapper } from "../components/Wrapper";
 import { Person } from "../components/Person";
+import { infiniteScroll } from "./infiniteScroll/useInfiniteScroll";
 
 /**
  * APIコールを含む無限スクロール
@@ -18,31 +19,10 @@ export const ApiCall = () => {
   const flatData = data?.pages.flatMap((page) => page.data);
   const dataLength = flatData?.length;
 
-  const observeAreaRef = useRef(null);
-  const observeTargetRef = useRef(null);
-
-  const callback: IntersectionObserverCallback = (entries) =>
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        console.log("fetch more");
-        fetchNextPage();
-      }
-    });
-
-  const scrollObserver = useCallback(() => {
-    return new IntersectionObserver(callback, {
-      root: observeAreaRef.current,
-      threshold: 0.5,
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!observeAreaRef.current) return;
-    if (!observeTargetRef.current) return;
-
-    const observer = scrollObserver();
-    observer.observe(observeTargetRef.current);
-  }, [data]);
+  const { observeTargetRef, observeAreaRef } = infiniteScroll({
+    callback: fetchNextPage,
+    data,
+  });
 
   return (
     <div>
