@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from "react";
+import { CSSProperties, FC, forwardRef } from "react";
 
 type Item = {
   index: number;
@@ -7,9 +7,13 @@ type Item = {
 /**
  * スクロールされる項目
  */
-export const Item: FC<Item> = ({ index }) => {
-  return <div style={style}>{index}</div>;
-};
+export const Item = forwardRef<HTMLDivElement, Item>(({ index }, ref) => {
+  return (
+    <div ref={ref} style={style}>
+      {index}
+    </div>
+  );
+});
 
 const style: CSSProperties = {
   height: 100,
