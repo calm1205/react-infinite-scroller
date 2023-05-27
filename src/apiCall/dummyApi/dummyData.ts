@@ -1,36 +1,16 @@
 export type dummyApiCursor = 0 | 1 | 2 | 3;
 export type Person = { name: string; age: number; job: string };
-export type DummyResponse = {
-  data: Person[];
-  page: number;
-  hasNextPage: boolean;
-  nextCursor?: number;
+
+type DummyData = {
+  [key in dummyApiCursor]: Person[];
 };
 
-export type DummyApi = ({
-  cursor,
-}: {
-  cursor: dummyApiCursor;
-}) => Promise<DummyResponse>;
-
-const MAX_PAGE = 3;
+export const LAST_PAGE = 3;
 
 /**
- * ダミーのページネーションAPI
+ * ダミーのAPIレスポンスデータ
  */
-export const dummyAPI: DummyApi = async ({ cursor }) => {
-  const response = dummyData[cursor];
-  const hasNextPage = cursor !== MAX_PAGE;
-
-  return {
-    data: response ?? undefined,
-    page: cursor,
-    hasNextPage,
-    nextCursor: hasNextPage ? cursor + 1 : undefined,
-  };
-};
-
-const dummyData = {
+export const dummyData: DummyData = {
   0: [
     { name: "John", age: 25, job: "Engineer" },
     { name: "Emily", age: 32, job: "Teacher" },

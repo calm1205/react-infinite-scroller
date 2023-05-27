@@ -1,20 +1,17 @@
-import { QueryFunction, useInfiniteQuery } from "@tanstack/react-query";
-import { DummyResponse, dummyAPI } from "./dummyAPI";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { dummyQuery } from "./dummyApi/dummyAPI";
 import { useCallback, useEffect, useRef } from "react";
 import { Wrapper } from "../components/Wrapper";
-import { Item } from "./Item";
+import { Person } from "../components/Person";
 
 /**
  * APIコールを含む無限スクロール
  */
 export const ApiCall = () => {
   // API call
-  const queryFn: QueryFunction<DummyResponse> = async ({ pageParam = 0 }) =>
-    await dummyAPI({ cursor: pageParam });
-
   const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ["query"],
-    queryFn,
+    queryFn: dummyQuery,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 
@@ -52,7 +49,7 @@ export const ApiCall = () => {
       <h2>API呼び出し</h2>
       <Wrapper ref={observeAreaRef}>
         {flatData?.map((person, index) => (
-          <Item
+          <Person
             key={index}
             {...person}
             ref={dataLength === index + 1 ? observeTargetRef : null}
