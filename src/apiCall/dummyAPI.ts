@@ -16,7 +16,7 @@ export type DummyApi = ({
 const MAX_PAGE = 3;
 
 /**
- * ダミーAPI
+ * ダミーのページネーションAPI
  */
 export const dummyAPI: DummyApi = async ({ cursor }) => {
   const response = dummyData[cursor];
