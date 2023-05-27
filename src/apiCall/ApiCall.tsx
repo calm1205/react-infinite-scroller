@@ -1,18 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
+import { QueryFunction, useInfiniteQuery } from "@tanstack/react-query";
+import { DummyResponse, dummyAPI } from "./dummyAPI";
 
 /**
  * APIコールを含む無限スクロール
  */
 export const ApiCall = () => {
-  const queryFn = async () =>
-    (await fetch("https://api.sampleapis.com/beers/ale")).json();
+  const queryFn: QueryFunction<DummyResponse> = async ({ pageParam = 0 }) =>
+    await dummyAPI({ cursor: pageParam });
 
-  const { data } = useQuery({ queryKey: ["sampleQuery"], queryFn });
+  const { data, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["query"],
+    queryFn,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+
   console.log(data);
 
   return (
     <div>
       <h2>API呼び出し</h2>
+      <button onClick={() => fetchNextPage()}>API call</button>
     </div>
   );
 };
