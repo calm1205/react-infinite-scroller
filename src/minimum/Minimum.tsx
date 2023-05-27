@@ -10,6 +10,7 @@ export const Minimum = () => {
   const observeAreaRef = useRef(null); // 監視対象の範囲
   const observeTargetRef = useRef(null); // 監視されるDom
 
+  // 監視対象が見えた時に発火する関数
   const callback = () => console.log("scroll bottom.");
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export const Minimum = () => {
       root: observeAreaRef.current,
       threshold: 0.5, // 監視対象の範囲に監視対象が <threshold>%見えるようになったらcallbackを発火
     });
+
     observer.observe(observeTargetRef.current);
   }, []);
 
