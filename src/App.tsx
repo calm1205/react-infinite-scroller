@@ -7,7 +7,7 @@ export const App = () => {
   const wrapperRef = useRef(null);
   const itemRef = useRef(null);
 
-  const callback = useCallback(() => console.log("scroll bottom"), []);
+  const callback = () => console.log("scroll bottom");
 
   useEffect(() => {
     if (!wrapperRef.current) return;
@@ -15,7 +15,7 @@ export const App = () => {
 
     const observer = new IntersectionObserver(callback, {
       root: wrapperRef.current,
-      threshold: 0,
+      threshold: 0.5,
     });
     observer.observe(itemRef.current);
   }, []);
