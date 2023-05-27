@@ -8,6 +8,9 @@ export const Wrapper: FC<PropsWithChildren> = ({ children }) => {
 };
 
 const style: CSSProperties = {
+  height: 500,
   width: 500,
   border: "1px solid gray",
+  overflowY: "scroll",
+  backgroundColor: "whiteSmoke",
 };
