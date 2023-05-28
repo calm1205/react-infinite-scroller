@@ -38,7 +38,10 @@ export const infiniteScroll: InfiniteScroll = <
       new IntersectionObserver(
         (entries) =>
           entries.forEach((entry) => {
-            if (entry.isIntersecting) callback();
+            if (entry.isIntersecting) {
+              callback();
+              console.log("fetch");
+            }
           }),
         {
           root: observeAreaRef.current,
