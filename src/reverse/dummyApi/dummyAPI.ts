@@ -6,7 +6,9 @@ export type ApiResponse = {
   data: Person[];
   page: number;
   hasNextPage: boolean;
+  hasPreviousPage: boolean;
   nextCursor?: number;
+  previousCursor?: number;
 };
 
 export type DummyApi = ({
@@ -24,12 +26,15 @@ export type DummyApi = ({
 export const dummyAPI: DummyApi = async ({ cursor }) => {
   const response = dummyData[cursor];
   const hasNextPage = cursor !== LAST_PAGE;
+  const hasPreviousPage = cursor !== 0;
 
   return {
     data: response ?? undefined,
     page: cursor,
     hasNextPage,
+    hasPreviousPage,
     nextCursor: hasNextPage ? cursor + 1 : undefined,
+    previousCursor: hasPreviousPage ? cursor - 1 : undefined,
   };
 };
 
@@ -37,5 +42,5 @@ export const dummyAPI: DummyApi = async ({ cursor }) => {
  * ダミーAPI
  */
 export const dummyQuery: QueryFunction<ApiResponse> = async ({
-  pageParam = 0,
+  pageParam = 3,
 }) => await dummyAPI({ cursor: pageParam });

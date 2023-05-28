@@ -1,5 +1,6 @@
 import { ApiCall } from "./apiCall/ApiCall";
 import { Minimum } from "./minimum/Minimum";
+import { Reverse } from "./reverse/Reverse";
 
 export const App = () => {
   return (
@@ -8,7 +9,8 @@ export const App = () => {
 
       <div style={{ display: "flex", gap: 30 }}>
         <Minimum />
-        <ApiCall />
+        {/* <ApiCall /> */}
+        <Reverse />
       </div>
     </div>
   );

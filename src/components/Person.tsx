@@ -1,7 +1,8 @@
 import { CSSProperties, forwardRef } from "react";
-import { Person as PersonType } from "../apiCall/dummyApi/dummyAPI";
 
-export const Person = forwardRef<HTMLDivElement, PersonType>(
+export type Person = { name: string; age: number; job: string };
+
+export const Person = forwardRef<HTMLDivElement, Person>(
   ({ name, age, job }, ref) => (
     <div style={style} ref={ref}>
       <p style={nameStyle}>{name}</p>
