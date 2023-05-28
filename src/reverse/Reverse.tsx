@@ -9,12 +9,11 @@ import { useEffect, useRef } from "react";
  * APIコールを含む無限スクロール: 逆順
  */
 export const Reverse = () => {
-  const { data, isInitialLoading, isFetching, fetchPreviousPage } =
-    useInfiniteQuery({
-      queryKey: ["query reverse"],
-      queryFn: dummyQuery,
-      getPreviousPageParam: (page) => page.previousCursor,
-    });
+  const { data, isInitialLoading, fetchPreviousPage } = useInfiniteQuery({
+    queryKey: ["query reverse"],
+    queryFn: dummyQuery,
+    getPreviousPageParam: (page) => page.previousCursor,
+  });
 
   const flatData = data?.pages.flatMap((page) => page.data);
 
@@ -23,6 +22,7 @@ export const Reverse = () => {
     data,
   });
 
+  // fetchが連鎖するのを回避
   const fixedRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (fixedRef.current) fixedRef.current.scrollIntoView();
