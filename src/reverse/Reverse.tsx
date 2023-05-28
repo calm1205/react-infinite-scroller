@@ -3,17 +3,16 @@ import { dummyQuery } from "./dummyApi/dummyAPI";
 import { Wrapper } from "../components/Wrapper";
 import { Person } from "../components/Person";
 import { infiniteScroll } from "./infiniteScroll/infiniteScroll";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 /**
  * APIコールを含む無限スクロール: 逆順
  */
 export const Reverse = () => {
-  const { data, fetchPreviousPage } = useInfiniteQuery({
-    queryKey: ["query"],
+  const { data, isInitialLoading, fetchPreviousPage } = useInfiniteQuery({
+    queryKey: ["query reverse"],
     queryFn: dummyQuery,
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
-    getPreviousPageParam: (lastPage) => lastPage.previousCursor,
+    getPreviousPageParam: (page) => page.previousCursor,
   });
 
   const flatData = data?.pages.flatMap((page) => page.data);
@@ -23,11 +22,11 @@ export const Reverse = () => {
     data,
   });
 
+  // 一番下目でスクロール
+  const bottomRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
-    const areaDom = observeAreaRef.current;
-    if (!areaDom) return;
-    areaDom.scrollTop = areaDom.scrollHeight;
-  }, []);
+    if (bottomRef.current && data) bottomRef.current.scrollIntoView();
+  }, [isInitialLoading]);
 
   return (
     <div>
@@ -40,6 +39,7 @@ export const Reverse = () => {
             ref={index === 0 ? observeTargetRef : null}
           />
         ))}
+        <div ref={bottomRef} />
       </Wrapper>
     </div>
   );

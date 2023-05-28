@@ -9,7 +9,7 @@ export const App = () => {
 
       <div style={{ display: "flex", gap: 30 }}>
         <Minimum />
-        {/* <ApiCall /> */}
+        <ApiCall />
         <Reverse />
       </div>
     </div>

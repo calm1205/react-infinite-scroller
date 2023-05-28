@@ -12,8 +12,8 @@ export const Wrapper = forwardRef<HTMLDivElement, PropsWithChildren>(
 );
 
 const style: CSSProperties = {
-  height: 500,
-  width: 500,
+  height: "500px",
+  width: "500px",
   border: "1px solid gray",
   overflow: "hidden",
   overflowY: "scroll",

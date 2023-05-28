@@ -33,21 +33,20 @@ export const infiniteScroll: InfiniteScroll = <
   const observeAreaRef = useRef<T>(null);
   const observeTargetRef = useRef<U>(null);
 
-  const scrollObserver = useCallback(() => {
-    return new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            console.log("fetch");
-            callback();
-          }
-        }),
-      {
-        root: observeAreaRef.current,
-        threshold: 1,
-      }
-    );
-  }, [data]);
+  const scrollObserver = useCallback(
+    () =>
+      new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) callback();
+          }),
+        {
+          root: observeAreaRef.current,
+          threshold: 0.9,
+        }
+      ),
+    []
+  );
 
   useEffect(() => {
     const area = observeAreaRef.current;

@@ -6,8 +6,6 @@ type DummyData = {
   [key in dummyApiCursor]: Person[];
 };
 
-export const LAST_PAGE = 3;
-
 /**
  * ダミーのAPIレスポンスデータ
  */
